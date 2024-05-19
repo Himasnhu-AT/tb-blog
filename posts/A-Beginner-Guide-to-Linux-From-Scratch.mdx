@@ -1,0 +1,155 @@
+---
+title: A Beginner's Guide to Linux From Scratch
+description: Learn how to build a Linux system from scratch without ISO images.
+date: 2019-09-16
+author: Himanhu
+---
+
+## Objective
+
+1. Gain a top-level understanding of how Linux works and its foundational principles.
+2. Gather useful tips and tricks from someone who has already gone through the process.
+3. Learn to install Linux on any hardware without using ISO images.
+
+For reference, I have used the following blogs, which provide some of the best open-source documentation available:
+
+[Linux From Scratch](http://www.linuxfromscratch.org/lfs/)
+
+## My Host Machines During Compilation
+
+- **Round 1:** Dedicated host with base OS as Ubuntu
+- **Round 2:** Ubuntu VM installed on a base Ubuntu-operated laptop
+
+## Let's Get Started
+
+### Step 1: Creating a Dedicated Partition for LFS Compilation and Base Installation
+
+We will compile all the packages needed to build a Linux system and install our Linux OS in the same directory.
+
+The utility I used to make partitions is an app called Gparted, which is preinstalled in the Ubuntu flavor.
+
+Here's a quick overview of the partition setup:
+
+- **Root mount:** `/dev/sda1`
+- **Swap memory:** 8GB partition `/dev/sda5`
+- **Unallocated space:** 20GB for LFS compilation and installation (recommended to create a partition of about 30–35 GB).
+
+#### Commands for Partition Setup:
+
+```bash
+export LFS=/mnt/lfs
+mkdir $LFS
+echo $LFS # should output /mnt/lfs
+mkdir $LFS/sources
+mkdir $LFS/tools
+ln -sv $LFS/tools /
+```
+
+### Step 2: Download LFS Binaries from Official LFS Repos
+
+```bash
+cd $LFS/sources
+wget http://www.linuxfromscratch.org/lfs/downloads/8.4/wget-list
+wget http://www.linuxfromscratch.org/lfs/downloads/8.4/md5sums
+
+pushd $LFS/sources
+md5sum -c md5sums
+```
+
+The above command should return all packages checked with "OK" as a result.
+
+### Step 3: Adding LFS User and Setting Up the Environment
+
+```bash
+groupadd lfs
+useradd -s /bin/bash -g lfs -m -k /dev/null lfs
+passwd lfs # Give a password for lfs user login
+
+chown -v lfs $LFS/tools
+chown -v lfs $LFS/sources
+```
+
+#### Environment Setup:
+
+```bash
+su - lfs
+
+cat > ~/.bash_profile << "EOF"
+exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
+EOF
+
+cat > ~/.bashrc << "EOF"
+set +h
+umask 022
+LFS=/mnt/lfs
+LC_ALL=POSIX
+LFS_TGT=$(uname -m)-lfs-linux-gnu
+PATH=/tools/bin:/bin:/usr/bin
+export LFS LC_ALL LFS_TGT PATH
+EOF
+
+source ~/.bash_profile
+echo $LFS # should return /mnt/lfs
+```
+
+### Step 4: General Steps for the Compilation Process
+
+For compiling all the packages/binaries, follow these steps:
+
+```bash
+cd $LFS/sources
+tar -xvf <package-name/binary-name.tar.gz>
+cd <package-name/binary-name>
+./configure <with required options> && make
+make check # (optional for packages with test cases)
+make install
+rm -rf <package-name/binary-name>
+```
+
+Compile all packages in the exact order given below and follow every step mentioned in the LFS book:
+
+[Linux From Scratch - Book](http://www.linuxfromscratch.org/lfs/downloads/8.4/LFS-BOOK-8.4-NOCHUNKS.html)
+
+#### Example Packages to Compile:
+
+- Binutils-2.32 — Pass 1
+- GCC-8.2.0 — Pass 1
+- Linux-4.20.12 API Headers
+- Glibc-2.29
+- Libstdc++ from GCC-8.2.0
+- ... (and many more as listed in the LFS book)
+
+### Step 5: Continued Compilation
+
+Continue compiling the next set of packages as mentioned in the LFS book. Ensure you follow the exact sequence and steps.
+
+### Step 6: Udev, Hostname, IP Configuration, and Final Steps for Booting Linux
+
+After compiling the Linux kernel, it's essential to set up network scripts correctly to maintain connectivity.
+
+#### Final Command for Boot Configuration:
+
+```bash
+cat > /boot/grub/grub.cfg << "EOF"
+# Begin /boot/grub/grub.cfg
+set default=0
+set timeout=5
+
+insmod ext2
+set root=(hd0,2)
+
+menuentry "GNU/Linux, Linux 4.20.12-lfs-8.4" {
+        linux   /boot/vmlinuz-4.20.12-lfs-8.4 root=/dev/sda2 ro
+}
+EOF
+```
+
+### General Tips for the Entire Journey
+
+- Don’t deviate from the book at any point.
+- Write sensible network configuration scripts if your host system is not accessible geographically.
+- Be patient and maintain a positive attitude throughout the process.
+
+## Conclusion
+
+Thanks for reading my blog. Keep coding, keep smiling!

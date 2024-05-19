@@ -1,0 +1,170 @@
+---
+title: Setting up Linters, Syntax Highlighter, NerdTree, and More
+description: A guide on configuring Neovim as a full-blown IDE.
+date: 2022-09-12
+---
+
+Before we begin, let us motivate this topic with the relevance of Vim in 2022. I'll talk briefly about my personal experience learning Vim and the factors that got me into it. The second point of this discussion would be an instructional guide on how to configure your Neovim so you can turn it into a full-blown IDE.
+
+## Why do People use Vim in 2022?
+
+There is a compelling reason why Vim has remained relevant to most developers for nearly half a century. Among developers, the functionality that Vim offers to edit multiple files with a few keystrokes is simply unmatched. Being able to progress on your deliverables and explore candidate solutions at the speed of thought is crucial among developers working in mid to large codebases. That is the reason I got into Vim. The learning curve is quite steep. It took me a week to get comfortable with the keystrokes, but it pays off quite well. (I found this cheat sheet helpful: [Vim Cheat Sheet](https://vim.rtorr.com/).)
+
+Watching more experienced developers like ThePrimeagen, George Hotz, and Jason Turner move seamlessly on multiple files, reimplementing their design and testing their code, made me want to incorporate Vim into my personal workflow. It allowed me to focus more on the code instead of spending too much time on popups in a GUI editor.
+
+Although I don't write on Vim (and Neovim) every time, text editors and IDEs offer Vim keybindings, minimizing the lag you spend clicking on the GUI. The point is, no matter where you go in your dev journey, you should give Vim a try.
+
+## Vim and Neovim
+
+Neovim is a result of the Vim community's effort to support better scripting through Lua, modern plugins, and integration with modern GUIs (Wikipedia Contributors, 2022). The Neovim project started in 2014 with its main design focus dedicated to the extensibility and maintainability of Vim.
+
+Most commands and Vim configurations work in Neovim by default as the Neovim project is a forked and more feature-rich version of Vim.
+
+The title of this section naturally lends itself to the topic of which is better, but I leave that to your judgment to decide which works better for you. Personally, I find Neovim more friendly as code completion and static analyzers are simpler to configure.
+
+## Configuring Neovim
+
+All configurations for Neovim are stored in the `~/.config/nvim` directory. But unlike Vim which is available in most Linux distributions, you have to make sure that you have Neovim by running `nvim -v`. If it doesn't output the version, you have to install it using:
+
+```bash
+sudo apt install neovim
+```
+
+(I'm using Ubuntu; your distro may have a different package manager to install Neovim.)
+
+Next, we have to install Git and Curl to set up Vim Plug, which allows you to install Vim plugins. But first, let's make sure that we are up to date.
+
+```bash
+sudo apt update
+sudo apt install git curl
+```
+
+To install Vim Plug, run the shell command for Linux:
+
+```bash
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
+Now, we navigate to `~/.config/nvim`. If this directory is not available, make one using:
+
+```bash
+cd ~/ && mkdir -p .config/nvim
+```
+
+We put all our user-defined configurations in the `~/.config/nvim/init.vim` file.
+
+Don't panic if the blank screen opens. The first keys you should know to edit files in Vim are:
+
+- `i` for insert
+- `[esc] + q` for quit
+- `[esc] + w` for save
+- `[esc] + wq` for save and quit
+
+Here are some basic configurations:
+
+```vim
+:set number " show line numbers
+:set relativenumber " show line number on the current line relative to other lines
+:set autoindent " sets newline to inherit the indentation of prev lines
+:set tabstop=4 " indents using 4 spaces
+:set shiftwidth=4 " sets 4 spaces indents when shifting
+:set smarttab " sets `tabstop` number of spaces when the tab is pressed
+:set softtabstop=4 " sets 4 spaces when tab or backspace is pressed
+:set mouse=a " enables the mouse for scrolling and resize
+```
+
+You may extend this initial configuration as you like. Refer to: [Top 50 Vim Configuration Options](https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/). If you're satisfied, save and exit.
+
+## Setting Up Plugins
+
+Your Vim plugins are declared between `call plug#begin()` and `call plug#end()`. Inside, we place a set of `Plug [plugin URL]` commands. And when we're satisfied, hit `[esc] + :PlugInstall`.
+
+To enable the tagbar for my configuration, use:
+
+```bash
+sudo apt install exuberant-ctags
+```
+
+My personal Vim plugins are as follows:
+
+```vim
+call plug#begin('~/.config/nvim/plugged')
+
+Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
+Plug 'https://github.com/preservim/nerdtree' " NerdTree
+Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
+Plug 'https://github.com/vim-airline/vim-airline' " Status bar
+Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
+Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
+Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
+Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
+Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
+Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
+
+call plug#end()
+
+nnoremap <C-f> :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+nmap <F8> :TagbarToggle<CR>
+
+let g:NERDTreeDirArrowExpandable="+"
+let g:NERDTreeDirArrowCollapsible="~"
+```
+
+NerdTree provides a graphical view of your file tree:
+
+```jsx
+<Image
+  alt={`NerdTree File Tree`}
+  src={`/images/nerdtree.png`}
+  width={800}
+  height={600}
+/>
+```
+
+For the language server, code completion, and static analysis tools, we use `coc.vim` plugin. This requires NodeJS version 14+ and its package manager NPM.
+
+```bash
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs && sudo apt install npm
+```
+
+Now that we have the prerequisite for `coc.nvim`, open `init.vim` and add the following:
+
+```vim
+call plug#begin()
+...
+Plug 'https://github.com/neoclide/coc.nvim'  " Auto Completion
+...
+call plug#end()
+
+nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
+```
+
+Head over to the `~/.config/nvim/plugged/coc.nvim` directory and build yarn with the following commands:
+
+```bash
+sudo npm install -g yarn
+yarn install
+yarn build
+```
+
+To be able to configure the linters, we have to install different modules for different languages we're running on. For this example, we will set up Python3. (Make sure that Python3 and Pip3 are installed.)
+
+Install static analysis tool for Python (Jedi is one example but there are also others):
+
+```bash
+pip3 install jedi
+```
+
+Inside our Python file, type: `[esc] + :CocInstall coc-python`. And there we have it!
+
+Thanks for getting this far and enjoy exploring tools in your terminal!
+
+## References
+
+- Wikipedia contributors. (2022, August 26). Vim (text editor). In Wikipedia, The Free Encyclopedia. Retrieved 14:12, September 1, 2022, from [Wikipedia](<https://en.wikipedia.org/w/index.php?title=Vim_(text_editor)&oldid=1106761239>)
+- Choi, J. (2022). Vim-Plug. [GitHub](https://github.com/junegunn/vim-plug).
