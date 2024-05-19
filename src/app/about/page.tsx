@@ -10,18 +10,6 @@ const meta = {
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
-  openGraph: {
-    title: meta.title,
-    description: meta.description,
-    url: meta.url,
-  },
-  twitter: {
-    title: meta.title,
-    description: meta.description,
-  },
-  alternates: {
-    canonical: meta.url,
-  },
 }
 
 export default function About() {
@@ -30,7 +18,7 @@ export default function About() {
       <h1>About</h1>
       Passionate software engineer with a track record of crafting impactful
       products. I thrive on collaborative projects and enjoy working with
-      talented individuals. Let's connect and explore opportunities to create
+      talented individuals. Let`&apos;`s connect and explore opportunities to create
       something remarkable together.
       <h2>Experience</h2>
       Figure out on your own :) hint: Linkedin

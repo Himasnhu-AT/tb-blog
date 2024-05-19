@@ -1,1 +1,1 @@
-export const WEBSITE_HOST_URL = 'https://localhost:3000'
+export const WEBSITE_HOST_URL = 'https://tb-blog.vercel.app'

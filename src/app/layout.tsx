@@ -19,22 +19,6 @@ export const metadata: Metadata = {
     template: 'Himanhu',
   },
   description: meta.description,
-  openGraph: {
-    title: meta.title,
-    description: meta.description,
-    url: WEBSITE_HOST_URL,
-    siteName: meta.title,
-    locale: 'en-US',
-    type: 'website',
-  },
-  twitter: {
-    title: meta.title,
-    description: meta.description,
-    card: 'summary_large_image',
-  },
-  alternates: {
-    canonical: WEBSITE_HOST_URL,
-  },
 }
 
 export default function RootLayout({
