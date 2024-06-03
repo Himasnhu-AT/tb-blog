@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="StyleX is a new frontend styling framework, released by Facebook recently."
+    />
+    <meta name="author" content="Himanshu" />
+    <title>StyleX- Replacement of TailWindCSS?</title>
+  </head>
+  <body>
+    <header>
+      <h1>StyleX- Replacement of TailWindCSS?</h1>
+      <p>Author: Himanshu</p>
+      <p>Date: 2023-12-16</p>
+    </header>
+
+    <nav>
+      <h2>Table of contents</h2>
+      <ol>
+        <li><a href="#what-is-stylex">What is StyleX?</a></li>
+        <li>
+          <a href="#atomic-css-for-unmatched-modularity"
+            >Atomic CSS for Unmatched Modularity</a
+          >
+        </li>
+        <li>
+          <a href="#dynamic-styles-a-game-changer"
+            >Dynamic Styles: A Game-Changer</a
+          >
+        </li>
+        <li>
+          <a href="#streamlined-performance-with-code-splitting"
+            >Streamlined Performance with Code Splitting</a
+          >
+        </li>
+        <li>
+          <a href="#optimal-code-quality-with-dead-code-elimination"
+            >Optimal Code Quality with Dead Code Elimination</a
+          >
+        </li>
+        <li>
+          <a href="#type-safety-where-style-meets-rigor"
+            >Type Safety: Where Style Meets Rigor</a
+          >
+        </li>
+        <li>
+          <a href="#embracing-stylex-in-your-projects"
+            >Embracing StyleX in Your Projects</a
+          >
+          <ul>
+            <li>
+              <a href="#example-1-creating-styles-with-stylex-function"
+                >Example 1: Creating Styles with stylex Function</a
+              >
+            </li>
+            <li>
+              <a href="#example-2-dynamic-styles-with-stylexuse-hook"
+                >Example 2: Dynamic Styles with stylex.use Hook</a
+              >
+            </li>
+            <li>
+              <a href="#example-3-theming-with-stylexthemeprovider"
+                >Example 3: Theming with stylex.ThemeProvider</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#stylex-vs-tailwindcss-making-the-switch"
+            >StyleX vs. TailwindCSS: Making the Switch</a
+          >
+          <ul>
+            <li>
+              <a href="#syntax-and-api-a-paradigm-shift"
+                >Syntax and API: A Paradigm Shift</a
+              >
+            </li>
+            <li>
+              <a href="#performance-and-bundle-size-stylex-takes-the-lead"
+                >Performance and Bundle Size: StyleX Takes the Lead</a
+              >
+            </li>
+            <li>
+              <a href="#features-and-trade-offs-finding-the-sweet-spot"
+                >Features and Trade-offs: Finding the Sweet Spot</a
+              >
+            </li>
+            <li>
+              <a href="#ecosystem-and-community-a-growing-presence"
+                >Ecosystem and Community: A Growing Presence</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#conclusion-embrace-the-future-with-stylex"
+            >Conclusion: Embrace the Future with StyleX</a
+          >
+        </li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="what-is-stylex">
+        <h2>What is StyleX?</h2>
+        <p>
+          StyleX is the latest CSS library, introduced by Facebook, which is set
+          to revolutionize the way we approach styling in web development. Born
+          out of the need to tackle the challenges posed by traditional
+          CSS-in-JS solutions, StyleX promises a seamless and efficient styling
+          experience, especially for large-scale projects.
+        </p>
+        <p>
+          Let's dive into the distinctive features that make StyleX stand out
+          from its predecessors.
+        </p>
+      </section>
+
+      <section id="atomic-css-for-unmatched-modularity">
+        <h2>Atomic CSS for Unmatched Modularity</h2>
+        <p>
+          StyleX embraces the concept of Atomic CSS, generating small, reusable,
+          and composable CSS classes. This not only enhances modularity but also
+          makes styling scalable and maintainable for any web element.
+        </p>
+      </section>
+
+      <section id="dynamic-styles-a-game-changer">
+        <h2>Dynamic Styles: A Game-Changer</h2>
+        <p>
+          Dynamic styling based on component props, state, or context becomes a
+          breeze with StyleX. The library offers a simple and declarative
+          syntax, empowering us to create styles that adapt dynamically for a
+          responsive and engaging user experience.
+        </p>
+      </section>
+
+      <section id="streamlined-performance-with-code-splitting">
+        <h2>Streamlined Performance with Code Splitting</h2>
+        <p>
+          One of StyleX's standout features is automatic code splitting. By
+          breaking down CSS code into chunks loaded on demand, StyleX
+          significantly reduces the initial payload. The result? Improved
+          performance and faster load times for our web applications.
+        </p>
+      </section>
+
+      <section id="optimal-code-quality-with-dead-code-elimination">
+        <h2>Optimal Code Quality with Dead Code Elimination</h2>
+        <p>
+          Say goodbye to unused styles cluttering your CSS bundles. StyleX
+          employs dead code elimination during the build process, ensuring that
+          only the styles our application needs make it to the final bundle.
+          This not only enhances efficiency but also contributes to a more
+          maintainable codebase.
+        </p>
+      </section>
+
+      <section id="type-safety-where-style-meets-rigor">
+        <h2>Type Safety: Where Style Meets Rigor</h2>
+        <p>
+          Integrated seamlessly with TypeScript and Flow, StyleX brings type
+          safety to the world of styling. Enjoy enhanced development speed and
+          confidence with auto-completion and type checking for style properties
+          and values.
+        </p>
+      </section>
+
+      <section id="embracing-stylex-in-your-projects">
+        <h2>Embracing StyleX in Your Projects</h2>
+
+        <h3 id="example-1-creating-styles-with-stylex-function">
+          Example 1: Creating Styles with stylex Function
+        </h3>
+        <pre><code>
+import { stylex } from 'stylex'
+
+const styles = stylex.create({
+  container: {
+    padding: '10px',
+    backgroundColor: 'lightblue',
+  },
+})
+
+function MyComponent() {
+  return &lt;div className={styles.container}&gt;Hello StyleX!&lt;/div&gt;
+}
+            </code></pre>
+
+        <h3 id="example-2-dynamic-styles-with-stylexuse-hook">
+          Example 2: Dynamic Styles with stylex.use Hook
+        </h3>
+        <pre><code>
+import { stylex } from 'stylex'
+
+function DynamicComponent({ isActive }) {
+  const dynamicStyles = stylex.use({
+    color: isActive ? 'green' : 'red',
+  })
+
+  return &lt;div className={dynamicStyles}&gt;Dynamic Style&lt;/div&gt;
+}
+            </code></pre>
+
+        <h3 id="example-3-theming-with-stylexthemeprovider">
+          Example 3: Theming with stylex.ThemeProvider
+        </h3>
+        <pre><code>
+import { stylex, ThemeProvider, useTheme } from 'stylex'
+
+const themes = {
+  light: { background: 'white', text: 'black' },
+  dark: { background: 'black', text: 'white' },
+}
+
+function ThemedComponent() {
+  const theme = useTheme()
+
+  const styles = stylex.create({
+    container: {
+      backgroundColor: theme.background,
+      color: theme.text,
+    },
+  })
+
+  return &lt;div className={styles.container}&gt;Themed Content&lt;/div&gt;
+}
+
+function App() {
+  return (
+    &lt;ThemeProvider theme={themes.light}&gt;
+      &lt;ThemedComponent /&gt;
+    &lt;/ThemeProvider&gt;
+  )
+}
+            </code></pre>
+      </section>
+
+      <section id="stylex-vs-tailwindcss-making-the-switch">
+        <h2>StyleX vs. TailwindCSS: Making the Switch</h2>
+
+        <h3 id="syntax-and-api-a-paradigm-shift">
+          Syntax and API: A Paradigm Shift
+        </h3>
+        <p>
+          StyleX introduces a unique syntax and API tailored to its features,
+          providing a paradigm shift from TailwindCSS. The learning curve is
+          worth the innovative styling capabilities it unlocks.
+        </p>
+
+        <h3 id="performance-and-bundle-size-stylex-takes-the-lead">
+          Performance and Bundle Size: StyleX Takes the Lead
+        </h3>
+        <p>
+          With its emphasis on atomic styling, dynamic styles, and efficient
+          code splitting, StyleX outshines TailwindCSS in terms of performance
+          and bundle size.
+        </p>
+
+        <h3 id="features-and-trade-offs-finding-the-sweet-spot">
+          Features and Trade-offs: Finding the Sweet Spot
+        </h3>
+        <p>
+          While both StyleX and TailwindCSS offer distinct features, StyleX
+          excels in atomic styling and dynamic styles. The trade-offs involve
+          adapting to a new paradigm, but the benefits for large-scale projects
+          are undeniable.
+        </p>
+
+        <h3 id="ecosystem-and-community-a-growing-presence">
+          Ecosystem and Community: A Growing Presence
+        </h3>
+        <p>
+          TailwindCSS boasts a robust ecosystem and community. StyleX, though
+          newer, is expected to gain traction rapidly, especially with its
+          anticipated open-source release.
+        </p>
+      </section>
+
+      <section id="conclusion-embrace-the-future-with-stylex">
+        <h2>Conclusion: Embrace the Future with StyleX</h2>
+        <p>
+          In conclusion, StyleX emerges as the next frontier in CSS styling,
+          offering a dynamic and performance-driven alternative to TailwindCSS.
+          Its unique features, coupled with the backing of Facebook, position it
+          as a compelling choice for developers tackling large-scale web
+          projects.
+        </p>
+        <p>
+          To embark on your StyleX journey, visit the official website, explore
+          the GitHub repository.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
